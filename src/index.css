@@ -1,0 +1,28 @@
+header#TopNav .favorites {
+    width: 36px;
+    height: 30px;
+    padding-top: 2px;
+}
+/* body {
+  text-align: center;
+  background-image: url(https://www.traveller.com.au/content/dam/images/h/1/4/j/w/q/image.related.socialLead.620x349.h1f2by.png/1560317748291.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+} */
+body {
+  padding-top: 56px;
+}
+
+.carousel-item {
+  height: 65vh;
+  min-height: 300px;
+  background: no-repeat center center scroll;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.portfolio-item {
+  margin-bottom: 30px;
+}
