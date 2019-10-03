@@ -10,7 +10,7 @@ class CitiesController < ApplicationController
 
   # GET /cities/1
   def show
-    render json: city
+    render json: @city
   end
 
   # POST /cities
@@ -26,22 +26,22 @@ class CitiesController < ApplicationController
 
   # PATCH/PUT /cities/1
   def update
-    if city.update(city_params)
-      render json: city
+    if @city.update(city_params)
+      render json: @city
     else
-      render json: city.errors, status: :unprocessable_entity
+      render json: @city.errors, status: :unprocessable_entity
     end
   end
 
   # DELETE /cities/1
   def destroy
-    city.destroy
+    @city.destroy
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_city
-      city = City.find(params[:id])
+      @city = City.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.

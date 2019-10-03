@@ -17,6 +17,9 @@ ActiveRecord::Schema.define(version: 2019_09_30_191514) do
 
   create_table "cities", force: :cascade do |t|
     t.string "name"
+    t.string "image_url"
+    t.string "description"
+    t.integer "favorites_count"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

@@ -3,6 +3,207 @@
     height: 30px;
     padding-top: 2px;
 } */
+.cardFavoriteBtn {
+  cursor: pointer;
+}
+.sidenav {
+  width: 140px;
+  position: fixed;
+  z-index: 1;
+  top: 600px;
+  left: 10px;
+  background: #eee;
+  overflow-x: hidden;
+  padding: 6px 0;
+  border-radius: 7px;
+}
+
+.sidenav a {
+  padding: 10px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #2196F3;
+  display: block;
+}
+
+.sidenav a:hover {
+  color: #064579;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+#displayInfo {
+  column-count: 3;
+}
+.searchPanel {
+  width: 30%;
+  height: auto;
+  margin: 0 auto;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+}
+#searchBtn {
+  background-color: white;
+  border: thin solid #3CF;
+  color: black;
+  border-radius: 4px;
+  padding: 12px 28px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+}
+#searchBtn:hover {
+  background-color: #3CF;
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+#searchBtn span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+#search {
+  width: 90%;
+  height: 30px;
+  border: thin solid #3CF;
+  font-family: Verdana, Geneva, sans-serif;
+  font-size: 14px;
+  color: #808080;
+  font-weight: bold;
+  padding: 12px 0px 12px 12px;
+  position: relative;
+  background-color: white;
+  border-radius: 4px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+}
+#displayInfo {
+  width: 100%;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  /* list-style: none; */
+  /* background-color: white; */
+  /* border: thin solid #3CF; */
+  /* visibility: hidden; */
+}
+#displayInfo li {
+  cursor: pointer;
+  position: relative;
+  padding: 12px 8px 12px 40px;
+  font-family: Verdana, Geneva, sans-serif;
+  font-size: 14px;
+  color: #808080;
+  transition: 0.2s;
+}
+#displayInfo li:hover {
+  background: #ffffff;
+  box-shadow: #333;
+  #color: #FFF;
+}
+
+.analog {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.clock1 {
+  position: relative;
+  width: 400px;
+  height: 400px;
+  background: url(http://www.vbforums.com/attachment.php?attachmentid=170035&d=1563965659);
+}
+.hands {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.hand {
+  width: 50%;
+  height: 6px;
+  background: black;
+  position: absolute;
+  top: 50%;
+  transform-origin: 100%;
+  transform: rotate(90deg);
+  transition-all: 0.05s;
+  transition-timing-function: cubic-bezier(0.1, 2.7, 0.58, 1);
+}
+.clock-face {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform: translateY(-3px);
+}
+.clock {
+  width: 30rem;
+  height: 30rem;
+  border: 20px solid white;
+  border-radius: 50%;
+  margin: 50px auto;
+  position: relative;
+  padding: 2rem;
+  box-shadow:
+    0 0 0px 4px rgba(0,0,0,0.1),
+    inset 0 0 10px black
+}
+#button {
+  background-color: white;
+  border: 2px solid gray;
+  color: black;
+  border-radius: 4px;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+}
+#button:hover {
+  background-color: #3CF;
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+#button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+.like-button {
+  background-color: white;
+  border: 2px solid red;
+  color: black;
+  border-radius: 4px;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+}
+.like-button:hover {
+  background-color: red;
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+.like-button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
 
 body {
   padding-top: 56px;
@@ -4284,6 +4485,7 @@ input[type="button"].btn-block {
 
 .navbar-dark .navbar-nav .nav-link {
   color: rgba(255, 255, 255, 0.5);
+
 }
 
 .navbar-dark .navbar-nav .nav-link:hover, .navbar-dark .navbar-nav .nav-link:focus {

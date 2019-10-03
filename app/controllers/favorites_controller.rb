@@ -10,7 +10,7 @@ class FavoritesController < ApplicationController
 
   # GET /favorites/1
   def show
-    render json: favorite
+    render json: @favorite
   end
 
   # POST /favorites
@@ -26,22 +26,22 @@ class FavoritesController < ApplicationController
 
   # PATCH/PUT /favorites/1
   def update
-    if favorite.update(favorite_params)
-      render json: favorite
+    if @favorite.update(favorite_params)
+      render json: @favorite
     else
-      render json: favorite.errors, status: :unprocessable_entity
+      render json: @favorite.errors, status: :unprocessable_entity
     end
   end
 
   # DELETE /favorites/1
   def destroy
-    favorite.destroy
+    @favorite.destroy
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_favorite
-      favorite = Favorite.find(params[:id])
+      @favorite = Favorite.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.
