@@ -1,29 +1,115 @@
-/* header#TopNav .favorites {
-    width: 36px;
-    height: 30px;
-    padding-top: 2px;
-} */
+#mostLikedCity {
+    animation:blinkingText 1.5s infinite;
+}
+@keyframes blinkingText{
+    0%{     color: green;    }
+    49%{    color: transparent; }
+    50%{    color: transparent; }
+    99%{    color:transparent;  }
+    100%{   color: green;    }
+
+}
+
+#formInput {
+  border-radius: 4px;
+}
+
+#form {
+  width: 10%;
+  height: auto;
+  position: relative;
+  left: 0;
+  right: 0;
+  padding-left: 10px;
+}
+
+.deleteButton {
+  display: inline;
+}
+.userNav {
+  width: 250px;
+  position: relative;
+  z-index: 1;
+  top: 15px;
+  left: 5px;
+  background: #eee;
+  overflow-x: hidden;
+  padding: 9px 0px 100px;
+  border-radius: 7px;
+  border: 1px solid #3CF;
+  z-index: 2;
+}
+
+.userNav a {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #2196F3;
+  display: block;
+}
+
+.userNav a:hover {
+  color: #064579;
+}
+
+@media screen and (max-height: 450px) {
+  .userNav {padding-top: 15px;}
+  .userNav a {font-size: 25px;}
+}
+
+.favoriteDeleteBtn {
+    background-color: white;
+    border: 2px solid #eee;
+    color: black;
+    border-radius: 4px;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+}
+.favoriteDeleteBtn:hover {
+  background-color: #eee;
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+  cursor: pointer;
+}
+.favoriteDeleteBtn span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+.userFavorites{
+  column-count: 2;
+  column-rule: 1px solid lightblue;
+  column-gap: 300px;
+  column-span: all;
+}
 .cardFavoriteBtn {
   cursor: pointer;
 }
 .sidenav {
-  width: 140px;
-  position: fixed;
+  width: 250px;
+  position: relative;
   z-index: 1;
-  top: 600px;
-  left: 10px;
+  top: 10px;
+  left: 5px;
   background: #eee;
   overflow-x: hidden;
-  padding: 6px 0;
+  padding: 6px 0px 200px;
   border-radius: 7px;
+  border: 1px solid #3CF;
 }
 
 .sidenav a {
   padding: 10px 8px 6px 16px;
   text-decoration: none;
-  font-size: 25px;
+  font-size: 18px;
   color: #2196F3;
-  display: block;
+  display: inline;
+
 }
 
 .sidenav a:hover {
@@ -34,9 +120,9 @@
   .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 18px;}
 }
-#displayInfo {
+/* #displayInfo {
   column-count: 3;
-}
+} */
 .searchPanel {
   width: 30%;
   height: auto;
@@ -93,6 +179,7 @@
   height: auto;
   margin: 0;
   padding: 0;
+  text-align: center;
   /* list-style: none; */
   /* background-color: white; */
   /* border: thin solid #3CF; */
@@ -120,9 +207,9 @@
 }
 .clock1 {
   position: relative;
-  width: 400px;
-  height: 400px;
-  background: url(http://www.vbforums.com/attachment.php?attachmentid=170035&d=1563965659);
+  width: 300px;
+  height: 300px;
+  background: url(https://www.jing.fm/clipimg/detail/0-7025_clock-clipart-with-no-hands-analog-clock-without.png);
 }
 .hands {
   position: absolute;
@@ -131,7 +218,6 @@
 }
 .hand {
   width: 50%;
-  height: 6px;
   background: black;
   position: absolute;
   top: 50%;
@@ -140,6 +226,15 @@
   transition-all: 0.05s;
   transition-timing-function: cubic-bezier(0.1, 2.7, 0.58, 1);
 }
+#second-hand {
+  height: 2px;
+}
+#min-hand{
+  height: 4px;
+}
+#hour-hand {
+  height: 6px;
+}
 .clock-face {
   position: relative;
   width: 100%;
@@ -147,20 +242,20 @@
   transform: translateY(-3px);
 }
 .clock {
-  width: 30rem;
-  height: 30rem;
-  border: 20px solid white;
+  width: 15rem;
+  height: 15rem;
+  border: 10px solid white;
   border-radius: 50%;
   margin: 50px auto;
   position: relative;
-  padding: 2rem;
+  padding: 1rem;
   box-shadow:
     0 0 0px 4px rgba(0,0,0,0.1),
     inset 0 0 10px black
 }
 #button {
   background-color: white;
-  border: 2px solid gray;
+  border: 1px solid #3CF;
   color: black;
   border-radius: 4px;
   padding: 15px 32px;
@@ -7993,6 +8088,7 @@ button.bg-dark:focus {
 .my-4 {
   margin-top: 1.5rem !important;
   text-align: center;
+  font-size: 75px;
 }
 
 .mr-4,

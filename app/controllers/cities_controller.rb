@@ -3,7 +3,7 @@ class CitiesController < ApplicationController
 
   # GET /cities
   def index
-    cities = City.all
+    cities = City.order("id ASC")
 
     render json: cities
   end
@@ -26,7 +26,8 @@ class CitiesController < ApplicationController
 
   # PATCH/PUT /cities/1
   def update
-    if @city.update(city_params)
+    # byebug
+    if @city.update(favorites_count: params[:favorite_count])
       render json: @city
     else
       render json: @city.errors, status: :unprocessable_entity

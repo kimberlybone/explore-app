@@ -6,14 +6,14 @@ class UsersController < ApplicationController
   end
   # GET /users
   def index
-    users = User.all
+    users = User.order("id ASC")
 
     render json: users
   end
 
   # GET /users/1
   def show
-    render json: @user
+    render json: @user, include: '**'
   end
 
   # POST /users

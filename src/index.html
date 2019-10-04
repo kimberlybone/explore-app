@@ -6,30 +6,14 @@
       <link rel="stylesheet" href="index.css">
   </head>
   <body>
-      <!-- <nav class="nav-bar">
-        <a href="http://localhost:3000/users" aria-label="Explore">Explore</a>
-        <a href="/" class="favorites" aria-label="Favorites"> Favorites </a>
-      </nav>
-    <div class="search-bar"> -->
+
 
 <!-- NAVIGATION BAR -->
       <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="index.html">Explore</a>
-      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+      <a class="navbar-brand" href="index.html" style="Apple Chancery">Explore</a>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto" id="navigation-bar">
-          <li class="nav-item">
-            <a class="nav-link" href="about.html"></a>
-          </li>
-          <li class="nav-item">
-            <p class="nav-link" id="favorite"></p>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="contact.html"></a>
-          </li>
         </ul>
       </div>
     </div>
@@ -48,7 +32,7 @@
         <!-- Slide One - Set the background image for this slide in the line below -->
         <div class="carousel-item active" style="background-image: url('https://blog-www.pods.com/wp-content/uploads/2019/04/MG_1_1_New_York_City-1.jpg'); opacity: 0.5;">
           <div class="carousel-caption d-none d-md-block">
-            <h3>Explore!</h3>
+            <h3 style="font-family: Apple Chancery">Explore!</h3>
             <p></p>
           </div>
         </div>
@@ -77,11 +61,27 @@
       </a>
     </div>
   </header>
+  <!-- SIDE NAV  -->
+  <div class="navs">
+  <div id="mySidenav" class="sidenav">
+    <p style="text-align: center; font-family: Papyrus;">To see your profile click on your username below:</p>
+    <!-- <a href="#about" class="sideMenuItems">About</a> -->
+    <!-- <a href="#services" class="sideMenuItems">Services</a> -->
+    <!-- <a href="#clients" class="sideMenuItems">Clients</a> -->
+    <!-- <a href="#contact" class="sideMenuItems">Contact</a> -->
+  </div>
+
+  <div id="userNav" class="userNav">
+    <p style="text-align: center; font-family: Papyrus; padding: 2px 3px 2px 3px"> If your username is not already listed above...</p>
+    <a href="#" class="createUser" style="text-align: center; font-size: 14px; "> Click Me to Create a Username </a>
+
+  </div>
+  </div>
 
 <!-- MAIN BODY -->
   <div class="container" id="icons">
     <div id="headerDiv">
-     <h1 class="my-4">Explore the Cities of the US</h1>
+     <h1 class="my-4" style="font-family: Papyrus">Explore the Cities of the US</h1>
      <!-- /.row -->
 
 <!-- CLOCK -->
@@ -94,14 +94,6 @@
      </div>
      <!-- <p>Click on the element below to open the side navigation menu.</p> -->
 
-<!-- SIDE NAV  -->
-     <div id="mySidenav" class="sidenav">
-        To see your profile click on your username below:
-       <!-- <a href="#about" class="sideMenuItems">About</a> -->
-       <!-- <a href="#services" class="sideMenuItems">Services</a> -->
-       <!-- <a href="#clients" class="sideMenuItems">Clients</a> -->
-       <!-- <a href="#contact" class="sideMenuItems">Contact</a> -->
-     </div>
 
 
 <!-- SEARCH BAR -->
@@ -123,7 +115,10 @@
 
 <!-- CITY ICONS -->
         <br><br><br>
-       <h2 id="city-title" style="text-align: center;">Major Cities</h2>
+       <h2 id="city-title" style="text-align: center; font-family: Papyrus">Major Cities</h2><br>
+       <h5 style="text-align: center"> Most Liked Cities: </h5>
+       <h6 id="mostLikedCity" style="text-align: center"> </h6>
+
      </div>
 
    <div class="row" id="cityCards">
@@ -144,24 +139,28 @@
    <!-- /.row -->
 
    <!-- User, favorite & city info -->
-   <div id="all-info" class="info">
+  <div id="all-info" class="info">
+
     <div id="all-users" class="users">
-      <div>
-        <!-- <h2> To see your profile click on your username below: </h2> -->
-      </div>
     <!-- all users here  -->
     </div>
+
     <div id="all-favorites" class="favorites">
       <!-- all favorites here  -->
     </div>
+
     <div id="all-cities" class="cities">
       <!-- all cities here -->
     </div>
+
   </div>
 
-  <div id="profile-info">
-    <!-- user show page here -->
-  </div>
+
+    <div id="profile-info" class="profileInfo">
+      <!-- user show page here -->
+    </div>
+
+
   <div id="city-info">
     <!-- city show page here -->
     <!-- <div class="analog">

@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let userDiv = document.getElementById("all-users")
   let favoriteDiv = document.getElementById("all-favorites")
   let cityDiv = document.getElementById("all-cities")
+  let navDiv = document.querySelector('.navs')
   // get elements //
   let slidePics = document.getElementById('TopNav')
   let cityIcons = document.querySelector('.row')
@@ -20,13 +21,20 @@ document.addEventListener('DOMContentLoaded', () => {
   // done getting elements //
 
   // Clear Main Page //
-  function clearHome(){
+  function clearEverything(){
     slidePics.innerText = ""
     cityIcons.innerText = ""
     allInfo.innerText = ""
     headerDiv.innerText = ""
+    navDiv.innerText=""
+  }
+  function clearBody(){
+    console.log(headerDiv)
+    // cityIcons.innerText = ""
+    // headerDiv.innerText = ""
   }
   // Headers & Body //
+
   function createHeader(){
       return {
           'Content-Type': 'application/json',
@@ -47,60 +55,60 @@ let sidenav = document.getElementById("mySidenav")
   .then(userArr => {
     userArr.forEach(user => {
       sidenav.innerHTML += `
+      <div class="user">
       <a href="#about" class="sideMenuItems" data-id="${user.id}">${user.name}</a>
+      <button class="deleteButton" data-id="${user.id}" style="border-radius: 4px;">x</button><br>
+      </div>
       `
       localStorage.id = user.id
     })
   })
-//// END ////
 
+////////////////////////////////////// CREATE USER /////////////////////////////////////
 
+let form = document.createElement('form')
 
+    userNav.addEventListener('click', function(evt){
+      if(evt.target.className === "createUser"){
+      let userNav = document.querySelector('#userNav')
+      form.id = "form"
 
-///////////////////////////////// FETCH API ////////////////////////////////////
-  let searchForm = document.getElementById('search-form')
+      form.innerHTML = `
+      <br>
+      <label>Name: </label>
+      <input type="text" name="name" id="formInput"/><br>
+      <label>Current City: </label>
+      <input type="text" name="city" id="formInput"/><br><br>
+      <input type="submit" class="submitUser" id="button" />
+      `
+      userNav.append(form)
+      }
+    })
 
-
-  searchForm.addEventListener('submit', function submitSearchForm(evt){
-        evt.preventDefault()
-        console.log('Hello')
-
-        let wikiURL = "https://en.wikipedia.org/w/api.php";
-        let term = document.getElementById('search')
-        let searchInput = term.value
-        let searchUL = document.getElementById('displayInfo')
-
-        let params = {
-          action: "query",
-          list: "search",
-          srsearch: searchInput,
-          format: "json"
-        };
-
-        wikiURL = wikiURL + "?origin=*";
-        Object.keys(params).forEach(function(key){wikiURL += "&" + key + "=" + params[key];});
-
-        fetch(wikiURL)
-        .then(res => res.json())
-        .then(searchObj => {
-          if (searchObj.query.search[0].title === searchInput){
-            searchUL.innerText = ""
-            searchObj.query.search.forEach(element => {
-              console.log(element)
-              cityIcons.innerText = ""
-              allInfo.innerText = ""
-              citiesTitle.innerText = ""
-              searchUL.innerHTML += `
-              <h3 style="">${element.title}</h3><br>
-              <div>${element.snippet}</div><br>
-              `
-            })
-            console.log("Your search page 'Nelson Mandela' exists on English Wikipedia" );
-          }
+    form.addEventListener('submit', function(evt){
+      evt.preventDefault()
+      let name = evt.target.name.value
+      let city = evt.target.city.value
+      debugger
+      fetch(userURL, {
+        method: 'POST',
+        headers: createHeader(),
+        body: JSON.stringify({
+          name: name,
+          current_city: city
         })
-        .catch(function(error){console.log(error);});
       })
-
+      .then(res => res.json())
+      .then(userObj => {
+        sidenav.innerHTML += `
+        <div class="user">
+        <a href="#about" class="sideMenuItems" data-id="${userObj.id}">${userObj.name}</a>
+        <button class="deleteButton" style="border-radius: 4px;" data-id="${userObj.id}">x</button>
+        </div>
+        `
+        localStorage.id = userObj.id
+      })
+    })
 
 ////////////////////////////////////// SHOW USER //////////////////////////////////////
 
@@ -110,20 +118,35 @@ let sidenav = document.getElementById("mySidenav")
           fetch(userURL + '/' + id)
           .then(res => res.json())
           .then(userObj => {
-            clearHome()
+            clearEverything()
             profileInfo.innerHTML = `
             <div>
             <h1 style="text-align: center"> ${userObj.name}'s Profile </h1>
             </div>
             <h3> Name: ${userObj.name} </h3>
             <h3> Current City: ${userObj.current_city} </h3>
+            <button type="button" class="editButton" id="button" data-id="${userObj.id}"> Edit Profile Information </button>
+            <button type="button" class="button" id="button" data-id="${userObj.id}"> Edit My Favorites </button><br><br>
             `
+            let favoriteDiv = document.createElement('div')
+            favoriteDiv.className = ('userFavorites')
+            profileInfo.append(favoriteDiv)
+
             userObj.favorites.forEach(favorite => {
-              profileInfo.innerHTML += `
-              <h3> Favorites: ${favorite.city_name}</h3>
-              <button type="button" class="editButton" id="button" data-id="${userObj.id}"> Edit Profile Information </button>
-              <button type="button" class="button" id="button" data-id="${userObj.id}"> Add Favorite </button>
-              <button type="button" class="button" id="button" data-id="${userObj.id}"> Delete Favorite </button>
+              favoriteDiv.innerHTML += `
+              <div id="userFavorites">
+                <div class="card h-100">
+                  <a href="#"><img class="card-img-top" src="${favorite.city.image_url}" alt=""></a>
+                  <div class="card-body" data-id="">
+                    <h4>
+                      <a href="#" data-id="" class="cardTitle">${favorite.city_name}</a>
+                    </h4>
+                    <p class="card-text">  </p>
+                    <a href"#" class="cardFavoriteBtn" data-id=""> ${favorite.city.favorite_count}❤️</a>
+                    <span data-id="" class="favoriteDeleteBtn">Delete Favorite </span>
+                  </div>
+                </div><br><br>
+              </div>
               `
             })
           })
@@ -152,7 +175,6 @@ let sidenav = document.getElementById("mySidenav")
       profileInfo.append(form)
 
       form.addEventListener('submit', (evt) => {
-        console.log(evt)
         evt.preventDefault()
 
         let name = evt.target.name.value
@@ -186,12 +208,31 @@ let sidenav = document.getElementById("mySidenav")
     }
   })
 
+////////////////////////////////////// DELETE USER ////////////////////////////////
+  let deleteButton = document.querySelector('.deleteButton')
+
+
+  sidenav.addEventListener('click', function(evt){
+    let id = evt.target.dataset.id
+    if(evt.target.className === "deleteButton"){
+      let userLink = evt.target.parentElement
+      fetch(userURL + `/` + id, {
+        method: 'DELETE'
+      })
+      userLink.remove()
+    }
+  })
 
 ////////////////////////////////////// INDEX PAGE FOR CITIES ////////////////////////////////
+let mostLikedCity = document.querySelector('#mostLikedCity')
     fetch(cityURL)
     .then(res => res.json())
     .then(cityArr => {
       cityArr.forEach(city => {
+        if(city.favorites_count > cityArr.length){
+        mostLikedCity.innerText += `${city.name}`
+      }
+
         cityIcons.innerHTML += `
           <div class="col-lg-4 col-sm-6 portfolio-item">
             <div class="card h-100">
@@ -211,8 +252,6 @@ let sidenav = document.getElementById("mySidenav")
       })
     })
 
-
-
 ////////////////////////////////////// CITY SHOW PAGE /////////////////////////////////////
 let cityCards = document.querySelector('#cityCards')
 let cityInfo = document.querySelector('#city-info')
@@ -224,7 +263,7 @@ let cityInfo = document.querySelector('#city-info')
       fetch(cityURL + '/' + id)
       .then(res => res.json())
       .then(cityObj => {
-        clearHome()
+        clearEverything()
         cityInfo.innerHTML = `
         <div>
         <h1> ${cityObj.name} </h1>
@@ -238,63 +277,66 @@ let cityInfo = document.querySelector('#city-info')
     }
   })
 
-
-    // CLICK ON FAVORITES //
+//////////////////////////////////// CLICK ON FAVORITES ////////////////////////////////////
 
   cityCards.addEventListener('click', function(evt){
-    let id = evt.target.dataset.id
     if(evt.target.className === "cardFavoriteBtn"){
       console.log('hello')
-      let likeNum = evt.target
-      // let addFavorites = parseInt(likeNum.innerText)
-      // likeNum.innerText = addFavorites + 1
+      let likeID = evt.target.dataset.id
+      let userID = localStorage.id
+      let likeNum = document.querySelector(`span[data-id = "${likeID}"]`)
 
-      console.log(likeNum.innerText)
-      // fetch(favoriteURL + '/' + id)
-      // .then(res => res.json())
-      // .then(cityObj => {
-      //   clearHome()
-      //   cityInfo.innerHTML = `
-      //   <div>
-      //   <h1> ${cityObj.name} </h1>
-      //   </div>
-      //   <h3> Facts: </h3>
-      //   <ul> <li>${cityObj.description}</li>
-      //   </ul>
-      //   <button type="button" class="favoriteBtn" data-id="${cityObj.id}"> Favorite ❤️</button>
-      //   `
-      // })
+      let addFavorites = parseInt(likeNum.innerText)
+      likeNum.innerText = addFavorites + 1
+
+      fetch(cityURL + '/' + likeID, {
+        method: 'PATCH',
+        headers: createHeader(),
+        body: JSON.stringify({
+          favorite_count: addFavorites + 1
+        })
+      })
     }
   })
 
-  //ADD FAVORITE TO USER //
+//////////////////////////////////// ADD FAVORITE TO USER ////////////////////////////////////
+  let favortieDiv = document.getElementById('all-favorites')
   cityIcons.addEventListener('click', function(evt){
     if(evt.target.name === "addFavoriteBtn"){
-      let id = evt.target.dataset.id
+      let city_id = evt.target.dataset.id
+      let user_id = localStorage.id
       let city = evt.target.dataset.city
-      fetch(userURL + '/' + id + '/favorites', {
+      fetch(favoriteURL, {
         method: 'POST',
         headers: createHeader(),
         body: JSON.stringify({
-          city: city
-          // user:
+          city_id: city_id,
+          user_id: user_id
         })
       })
       .then(res => res.json())
       .then(favObj => {
-        profileInfo.innerHTML = `
-        <div>
-
+        // clearBody()
+        favoriteDiv.innerHTML += `
+        <div class="col-lg-4 col-sm-6 portfolio-item">
+          <div class="card h-100">
+            <a href="#"><img class="card-img-top" src="" alt=""></a>
+            <div class="card-body" data-id="">
+              <h4>
+                <a href="#" data-id="" class="cardTitle">${favObj.city_name}</a>
+              </h4>
+              <a href"#" class="cardFavoriteBtn" data-id=""> ❤️</a>
+              <span data-id="" class="cardFavoriteBtn"></span>${favObj.city.favorites_count}<br><br>
+              <button class="like-button" name="addFavoriteBtn" data-id="" data-name="">Add To My Favorites</button>
+            </div>
+          </div>
         </div>
-        <h2> ${favObj.city} </h2>
         `
       })
     }
   })
 
-
-
-//// CLOCK ////
+////////////////////////////////////// CLOCK //////////////////////////////////////
 
   function showClock(){
     const secondHand = document.getElementById('second-hand')
@@ -320,47 +362,46 @@ let cityInfo = document.querySelector('#city-info')
   showClock()
 
 
-//   // receive data
-//
-//   function getData(data){
-//     let dataread = JSON.parse(data.respondText)
-//     let read = dataread[1]
-//     let ul = document.getElementById('display')
-//     for(let i = 0; i< read.length; i++){
-//       if(read[i] !=""){
-//         let item = document.createElement('li')
-//         item.appendChild(document.createTextNode(read[i]))
-//         ul.appendChild(item)
-//       }else{
-//
-//       }
-//     }
-//   }
-//   let up = document.getElementById('display')
-//   up.onclick = function(evt){
-//     sendsugg(evt.target.innerHTML)
-//   }
-//   function sendsugg(sugg){
-//     let http2 = new.XMLHttpRequest()
-//     http2.onreadystatechange = function(){
-//       if(this.readyState === 4 && this.status === 200){
-//         showsugg(this)
-//       }
-//     }
-//     let clarify = sugg.split(' ').join(' ')
-//     http2.open('GET', 'proxy2.php?a=' + clarify, true)
-//     http2.send(null)
-//   }
-//   function showsugg(getsugg){
-//     document.getElementById('explain').innerHTML = getsegg.responseText
-//   }
+  ///////////////////////////////// FETCH API ////////////////////////////////////
+  let searchForm = document.getElementById('search-form')
 
-//// SIDE NAV ////
-// function openNav() {
-//   document.getElementById("mySidenav").style.width = "250px";
-// }
-//
-// function closeNav() {
-//   document.getElementById("mySidenav").style.width = "0";
-// }
+
+  searchForm.addEventListener('submit', function submitSearchForm(evt){
+    evt.preventDefault()
+
+    let wikiURL = "https://en.wikipedia.org/w/api.php";
+    let term = document.getElementById('search')
+    let searchInput = term.value
+    let searchUL = document.getElementById('displayInfo')
+
+    let params = {
+      action: "query",
+      list: "search",
+      srsearch: searchInput,
+      format: "json"
+    };
+
+    wikiURL = wikiURL + "?origin=*";
+    Object.keys(params).forEach(function(key){wikiURL += "&" + key + "=" + params[key];});
+
+    fetch(wikiURL)
+    .then(res => res.json())
+    .then(searchObj => {
+      if (searchObj.query.search[0].title === searchInput){
+        searchUL.innerText = ""
+        searchObj.query.search.forEach(element => {
+          console.log(element)
+          cityIcons.innerText = ""
+          allInfo.innerText = ""
+          citiesTitle.innerText = ""
+          searchUL.innerHTML += `
+          <h3 style="">${element.title}</h3><br>
+          <div>${element.snippet}</div><br>
+          `
+        })
+        console.log("Your search page 'Nelson Mandela' exists on English Wikipedia" );
+      }
+    })
+    .catch(function(error){console.log(error);});
+  })
 });

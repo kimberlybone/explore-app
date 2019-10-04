@@ -15,6 +15,7 @@ class FavoritesController < ApplicationController
 
   # POST /favorites
   def create
+
     favorite = Favorite.new(favorite_params)
 
     if favorite.save
@@ -46,6 +47,6 @@ class FavoritesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def favorite_params
-      params.require(:favorite).permit(:name, :user_id)
+      params.permit(:name, :user_id, :city_id)
     end
 end
