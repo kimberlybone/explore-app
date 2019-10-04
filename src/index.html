@@ -11,10 +11,7 @@
 <!-- NAVIGATION BAR -->
       <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="index.html" style="Apple Chancery">Explore</a>
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav ml-auto" id="navigation-bar">
-        </ul>
+      <a class="navbar-brand" href="index.html" style="font-family: Apple Chancery">Explore</a>
       </div>
     </div>
   </nav>
@@ -61,14 +58,12 @@
       </a>
     </div>
   </header>
+
   <!-- SIDE NAV  -->
+  <div id="mainBody">
   <div class="navs">
   <div id="mySidenav" class="sidenav">
     <p style="text-align: center; font-family: Papyrus;">To see your profile click on your username below:</p>
-    <!-- <a href="#about" class="sideMenuItems">About</a> -->
-    <!-- <a href="#services" class="sideMenuItems">Services</a> -->
-    <!-- <a href="#clients" class="sideMenuItems">Clients</a> -->
-    <!-- <a href="#contact" class="sideMenuItems">Contact</a> -->
   </div>
 
   <div id="userNav" class="userNav">
@@ -98,15 +93,18 @@
 
 <!-- SEARCH BAR -->
      <div class="searchPanel">
-       <form id="search-form" action="" method="get" style="text-align: center;">
-         <input type="text" name="search" id="search">
+       <form id="search-form" action="" method="get">
+         <select>
+           <option value="New Orleans">New Orleans</option>
+         <input type="text" name="search" id="search" placeholder="Search city information here..."><br>
            <input type="submit" id="searchBtn" value="Search">
+         </select>
            <br><br>
-         <!-- <ul id="displayInfo"> -->
+           <!-- <ul id="displayInfo"> -->
            <div id="displayInfo">
 
            </div>
-         <!-- </ul> -->
+           <!-- </ul> -->
        </form>
      </div>
      <br><br><br>
@@ -115,10 +113,11 @@
 
 <!-- CITY ICONS -->
         <br><br><br>
-       <h2 id="city-title" style="text-align: center; font-family: Papyrus">Major Cities</h2><br>
+       <h2 id="city-title" style="text-align: center; font-family: Papyrus">Like a city or add it to your favorites!</h2><br>
+       <div id="cityHeader">
        <h5 style="text-align: center"> Most Liked Cities: </h5>
        <h6 id="mostLikedCity" style="text-align: center"> </h6>
-
+       </div>
      </div>
 
    <div class="row" id="cityCards">
@@ -177,5 +176,6 @@
     <!-- <script src="UserProfile.js" type="text/javascript"></script> -->
     <!-- <script src="UserForm.js" type="text/javascript"></script> -->
     <script src="index.js" type="text/javascript" defer></script>
+  </div>
   </body>
 </html>

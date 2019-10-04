@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
     allInfo.innerText = ""
     headerDiv.innerText = ""
     navDiv.innerText=""
+    cityHeader.innerText = ""
   }
   function clearBody(){
     console.log(headerDiv)
@@ -45,8 +46,6 @@ document.addEventListener('DOMContentLoaded', () => {
 //// END HELPER METHODS ////
 
 
-
-
 //////////////////////////////// INDEX PAGE FOR USERS ///////////////////////////////
 let sidenav = document.getElementById("mySidenav")
 
@@ -60,7 +59,8 @@ let sidenav = document.getElementById("mySidenav")
       <button class="deleteButton" data-id="${user.id}" style="border-radius: 4px;">x</button><br>
       </div>
       `
-      localStorage.id = user.id
+      // localStorage.id = user.id
+      // localStorage.name = user.name
     })
   })
 
@@ -85,33 +85,39 @@ let form = document.createElement('form')
       }
     })
 
-    form.addEventListener('submit', function(evt){
-      evt.preventDefault()
-      let name = evt.target.name.value
-      let city = evt.target.city.value
-      debugger
-      fetch(userURL, {
-        method: 'POST',
-        headers: createHeader(),
-        body: JSON.stringify({
-          name: name,
-          current_city: city
-        })
-      })
-      .then(res => res.json())
-      .then(userObj => {
-        sidenav.innerHTML += `
-        <div class="user">
-        <a href="#about" class="sideMenuItems" data-id="${userObj.id}">${userObj.name}</a>
-        <button class="deleteButton" style="border-radius: 4px;" data-id="${userObj.id}">x</button>
-        </div>
-        `
-        localStorage.id = userObj.id
+  form.addEventListener('submit', function(evt){
+    evt.preventDefault()
+    let name = evt.target.name.value
+    let city = evt.target.city.value
+    fetch(userURL, {
+      method: 'POST',
+      headers: createHeader(),
+      body: JSON.stringify({
+        name: name,
+        current_city: city
       })
     })
+    .then(res => res.json())
+    .then(userObj => {
+      sidenav.innerHTML += `
+      <div class="user">
+      <a href="#about" class="sideMenuItems" data-id="${userObj.id}">${userObj.name}</a>
+      <button class="deleteButton" style="border-radius: 4px;" data-id="${userObj.id}">x</button>
+      </div>
+      `
+      localStorage.id = userObj.id
+      localStorage.name = userObj.name
+    })
+  })
+  // alert(`You are logged in as ${localStorage.name}`)
+
+
+
 
 ////////////////////////////////////// SHOW USER //////////////////////////////////////
 
+let userFavoriteDiv = document.createElement('div')
+userFavoriteDiv.className = ('userFavorites')
   sidenav.addEventListener('click', function(evt){
         if(evt.target.className === "sideMenuItems"){
           let id = evt.target.dataset.id
@@ -128,12 +134,12 @@ let form = document.createElement('form')
             <button type="button" class="editButton" id="button" data-id="${userObj.id}"> Edit Profile Information </button>
             <button type="button" class="button" id="button" data-id="${userObj.id}"> Edit My Favorites </button><br><br>
             `
-            let favoriteDiv = document.createElement('div')
-            favoriteDiv.className = ('userFavorites')
-            profileInfo.append(favoriteDiv)
+            profileInfo.append(userFavoriteDiv)
+            localStorage.id = userObj.id
+            localStorage.name = userObj.name
 
             userObj.favorites.forEach(favorite => {
-              favoriteDiv.innerHTML += `
+              userFavoriteDiv.innerHTML += `
               <div id="userFavorites">
                 <div class="card h-100">
                   <a href="#"><img class="card-img-top" src="${favorite.city.image_url}" alt=""></a>
@@ -172,6 +178,7 @@ let form = document.createElement('form')
       <input type="submit" class="hey" />
       </div>
       `
+      userFavoriteDiv.innerText = ""
       profileInfo.append(form)
 
       form.addEventListener('submit', (evt) => {
@@ -228,6 +235,7 @@ let mostLikedCity = document.querySelector('#mostLikedCity')
     fetch(cityURL)
     .then(res => res.json())
     .then(cityArr => {
+
       cityArr.forEach(city => {
         if(city.favorites_count > cityArr.length){
         mostLikedCity.innerText += `${city.name}`
@@ -250,6 +258,7 @@ let mostLikedCity = document.querySelector('#mostLikedCity')
           </div>
          `
       })
+
     })
 
 ////////////////////////////////////// CITY SHOW PAGE /////////////////////////////////////
@@ -317,7 +326,7 @@ let cityInfo = document.querySelector('#city-info')
       .then(res => res.json())
       .then(favObj => {
         // clearBody()
-        favoriteDiv.innerHTML += `
+        userFavoriteDiv.innerHTML += `
         <div class="col-lg-4 col-sm-6 portfolio-item">
           <div class="card h-100">
             <a href="#"><img class="card-img-top" src="" alt=""></a>
@@ -332,6 +341,7 @@ let cityInfo = document.querySelector('#city-info')
           </div>
         </div>
         `
+        alert(`${favObj.city_name} has been added to your Favorites`)
       })
     }
   })
@@ -364,6 +374,7 @@ let cityInfo = document.querySelector('#city-info')
 
   ///////////////////////////////// FETCH API ////////////////////////////////////
   let searchForm = document.getElementById('search-form')
+  let cityHeader = document.getElementById('cityHeader')
 
 
   searchForm.addEventListener('submit', function submitSearchForm(evt){
@@ -388,17 +399,21 @@ let cityInfo = document.querySelector('#city-info')
     .then(res => res.json())
     .then(searchObj => {
       if (searchObj.query.search[0].title === searchInput){
-        searchUL.innerText = ""
+        cityHeader.innerText = ""
+        searchUL.innerHTML = `<h2  style="text-decoration: underline;"> Snippets of information about your search </h2><br>`
         searchObj.query.search.forEach(element => {
           console.log(element)
           cityIcons.innerText = ""
           allInfo.innerText = ""
           citiesTitle.innerText = ""
           searchUL.innerHTML += `
+           <div class="card h-100" id="cityIcons">
           <h3 style="">${element.title}</h3><br>
           <div>${element.snippet}</div><br>
+          </div>
           `
         })
+        searchUL.innerHTML += `<p>For more information: <a href="https://www.wikipedia.org/">Click Here!</a></p>`
         console.log("Your search page 'Nelson Mandela' exists on English Wikipedia" );
       }
     })

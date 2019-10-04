@@ -1,3 +1,7 @@
+#mainBody {
+  display:flex;
+}
+
 #mostLikedCity {
     animation:blinkingText 1.5s infinite;
 }
@@ -27,7 +31,7 @@
   display: inline;
 }
 .userNav {
-  width: 250px;
+  width: 225px;
   position: relative;
   z-index: 1;
   top: 15px;
@@ -36,7 +40,7 @@
   overflow-x: hidden;
   padding: 9px 0px 100px;
   border-radius: 7px;
-  border: 1px solid #3CF;
+  border: 1px solid #eee;
   z-index: 2;
 }
 
@@ -91,7 +95,7 @@
   cursor: pointer;
 }
 .sidenav {
-  width: 250px;
+  width: 225px;
   position: relative;
   z-index: 1;
   top: 10px;
@@ -100,7 +104,8 @@
   overflow-x: hidden;
   padding: 6px 0px 200px;
   border-radius: 7px;
-  border: 1px solid #3CF;
+  border: 1px solid #eee;
+
 }
 
 .sidenav a {
@@ -120,26 +125,27 @@
   .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 18px;}
 }
-/* #displayInfo {
+#displayInfo {
   column-count: 3;
-} */
+}
 .searchPanel {
-  width: 30%;
+  width: 70%;
   height: auto;
-  margin: 0 auto;
+  /* margin: 0 auto; */
   position: absolute;
-  left: 0;
-  right: 0;
-  margin-left: auto;
-  margin-right: auto;
+  /* left: 650px; */
+  /* right: 20px; */
+  /* margin-left: auto; */
+  /* margin-right: auto; */
 }
 #searchBtn {
   background-color: white;
   border: thin solid #3CF;
   color: black;
+  right: 500px;
   border-radius: 4px;
   padding: 12px 28px;
-  text-align: center;
+  /* text-align: center; */
   text-decoration: none;
   display: inline-block;
   font-size: 14px;
@@ -157,8 +163,9 @@
   transition: 0.5s;
 }
 #search {
-  width: 90%;
+  width: 40%;
   height: 30px;
+  left: 350px;
   border: thin solid #3CF;
   font-family: Verdana, Geneva, sans-serif;
   font-size: 14px;
@@ -180,11 +187,10 @@
   margin: 0;
   padding: 0;
   text-align: center;
-  /* list-style: none; */
-  /* background-color: white; */
+  list-style: none;
+  background-color: white;
   /* border: thin solid #3CF; */
-  /* visibility: hidden; */
-}
+ }
 #displayInfo li {
   cursor: pointer;
   position: relative;
@@ -810,6 +816,7 @@ pre code {
   padding-left: 15px;
   margin-right: auto;
   margin-left: auto;
+
 }
 
 @media (min-width: 576px) {
