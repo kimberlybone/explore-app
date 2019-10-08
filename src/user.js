@@ -6,7 +6,7 @@ class User {
     User.all.push(this);
   }
 
-  renderListItem() {
+  renderItem() {
     return `
     <li>
       <h3>${this.name}

@@ -29,11 +29,11 @@ document.addEventListener('DOMContentLoaded', () => {
     navDiv.innerText=""
     cityHeader.innerText = ""
   }
-  function clearBody(){
-    console.log(headerDiv)
+  // function clearBody(){
+    // console.log(headerDiv)
     // cityIcons.innerText = ""
     // headerDiv.innerText = ""
-  }
+  // }
   // Headers & Body //
 
   function createHeader(){
@@ -59,8 +59,6 @@ let sidenav = document.getElementById("mySidenav")
       <button class="deleteButton" data-id="${user.id}" style="border-radius: 4px;">x</button><br>
       </div>
       `
-      // localStorage.id = user.id
-      // localStorage.name = user.name
     })
   })
 
@@ -68,7 +66,7 @@ let sidenav = document.getElementById("mySidenav")
 
 let form = document.createElement('form')
 
-    userNav.addEventListener('click', function(evt){
+    userNav.addEventListener('click', evt => {
       if(evt.target.className === "createUser"){
       let userNav = document.querySelector('#userNav')
       form.id = "form"
@@ -85,7 +83,7 @@ let form = document.createElement('form')
       }
     })
 
-  form.addEventListener('submit', function(evt){
+  form.addEventListener('submit', evt => {
     evt.preventDefault()
     let name = evt.target.name.value
     let city = evt.target.city.value
@@ -118,7 +116,7 @@ let form = document.createElement('form')
 
 let userFavoriteDiv = document.createElement('div')
 userFavoriteDiv.className = ('userFavorites')
-  sidenav.addEventListener('click', function(evt){
+  sidenav.addEventListener('click', evt => {
         if(evt.target.className === "sideMenuItems"){
           let id = evt.target.dataset.id
           fetch(userURL + '/' + id)
@@ -140,7 +138,7 @@ userFavoriteDiv.className = ('userFavorites')
 
             userObj.favorites.forEach(favorite => {
               userFavoriteDiv.innerHTML += `
-              <div id="userFavorites">
+              <div id="userFavorites" class="div-${favorite.id}">
                 <div class="card h-100">
                   <a href="#"><img class="card-img-top" src="${favorite.city.image_url}" alt=""></a>
                   <div class="card-body" data-id="">
@@ -148,8 +146,8 @@ userFavoriteDiv.className = ('userFavorites')
                       <a href="#" data-id="" class="cardTitle">${favorite.city_name}</a>
                     </h4>
                     <p class="card-text">  </p>
-                    <a href"#" class="cardFavoriteBtn" data-id=""> ${favorite.city.favorite_count}❤️</a>
-                    <span data-id="" class="favoriteDeleteBtn">Delete Favorite </span>
+                    <a href"#" class="cardFavoriteBtn" data-id=""> ${favorite.city.favorites_count}❤️</a>
+                    <span data-id="${favorite.id}" class="favoriteDeleteBtn">Delete Favorite </span>
                   </div>
                 </div><br><br>
               </div>
@@ -161,7 +159,7 @@ userFavoriteDiv.className = ('userFavorites')
 
 
 ////////////////////////////////////// EDIT USER //////////////////////////////////////
-  profileInfo.addEventListener('click', (evt) => {
+  profileInfo.addEventListener('click', evt => {
     let id = evt.target.dataset.id
 
     if(evt.target.className === 'editButton'){
@@ -181,7 +179,7 @@ userFavoriteDiv.className = ('userFavorites')
       userFavoriteDiv.innerText = ""
       profileInfo.append(form)
 
-      form.addEventListener('submit', (evt) => {
+      form.addEventListener('submit', evt => {
         evt.preventDefault()
 
         let name = evt.target.name.value
@@ -218,8 +216,7 @@ userFavoriteDiv.className = ('userFavorites')
 ////////////////////////////////////// DELETE USER ////////////////////////////////
   let deleteButton = document.querySelector('.deleteButton')
 
-
-  sidenav.addEventListener('click', function(evt){
+  sidenav.addEventListener('click', evt => {
     let id = evt.target.dataset.id
     if(evt.target.className === "deleteButton"){
       let userLink = evt.target.parentElement
@@ -260,15 +257,37 @@ let mostLikedCity = document.querySelector('#mostLikedCity')
       })
 
     })
+///// REVERSE BUTTON /////
+cityIcons.addEventListener('click', evt => {
+  if(evt.target.className === "reverseButton"){
+    let name = evt.target.dataset.name
+    let id = evt.target.dataset.id
+    let splitName = name.split('')
+    let reversedName = splitName.reverse().join('')
+
+    fetch(cityURL + '/' + id, {
+      method: 'PATCH',
+      headers: createHeader(),
+      body: JSON.stringify({
+        name: reversedName
+      })
+    })
+    .then(res => res.json())
+    .then(console.log)
+  }
+})
+
+
+
 
 ////////////////////////////////////// CITY SHOW PAGE /////////////////////////////////////
 let cityCards = document.querySelector('#cityCards')
 let cityInfo = document.querySelector('#city-info')
 
-  cityCards.addEventListener('click', (evt) => {
+  cityCards.addEventListener('click', evt => {
     let id = evt.target.dataset.id
+
     if(evt.target.className === "cardTitle"){
-      console.log('hello')
       fetch(cityURL + '/' + id)
       .then(res => res.json())
       .then(cityObj => {
@@ -288,9 +307,9 @@ let cityInfo = document.querySelector('#city-info')
 
 //////////////////////////////////// CLICK ON FAVORITES ////////////////////////////////////
 
-  cityCards.addEventListener('click', function(evt){
+  cityCards.addEventListener('click', evt => {
     if(evt.target.className === "cardFavoriteBtn"){
-      console.log('hello')
+
       let likeID = evt.target.dataset.id
       let userID = localStorage.id
       let likeNum = document.querySelector(`span[data-id = "${likeID}"]`)
@@ -310,7 +329,7 @@ let cityInfo = document.querySelector('#city-info')
 
 //////////////////////////////////// ADD FAVORITE TO USER ////////////////////////////////////
   let favortieDiv = document.getElementById('all-favorites')
-  cityIcons.addEventListener('click', function(evt){
+  cityIcons.addEventListener('click', evt => {
     if(evt.target.name === "addFavoriteBtn"){
       let city_id = evt.target.dataset.id
       let user_id = localStorage.id
@@ -325,9 +344,8 @@ let cityInfo = document.querySelector('#city-info')
       })
       .then(res => res.json())
       .then(favObj => {
-        // clearBody()
-        userFavoriteDiv.innerHTML += `
-        <div class="col-lg-4 col-sm-6 portfolio-item">
+        favoriteDiv.innerHTML += `
+        <div class="col-lg-4 col-sm-6 portfolio-item" id="${favObj.id}">
           <div class="card h-100">
             <a href="#"><img class="card-img-top" src="" alt=""></a>
             <div class="card-body" data-id="">
@@ -336,7 +354,7 @@ let cityInfo = document.querySelector('#city-info')
               </h4>
               <a href"#" class="cardFavoriteBtn" data-id=""> ❤️</a>
               <span data-id="" class="cardFavoriteBtn"></span>${favObj.city.favorites_count}<br><br>
-              <button class="like-button" name="addFavoriteBtn" data-id="" data-name="">Add To My Favorites</button>
+              <button class="like-button" name="addFavoriteBtn" data-id="${favObj.id}" data-name="">Add To My Favorites</button>
             </div>
           </div>
         </div>
@@ -345,27 +363,43 @@ let cityInfo = document.querySelector('#city-info')
       })
     }
   })
+////////////////////////////////////// DELETE FAVORITE //////////////////////////////////////
+let cardTitle = document.querySelector('.cardTitle')
+
+userFavoriteDiv.addEventListener('click', evt => {
+  let id = evt.target.dataset.id
+  if(evt.target.className === "favoriteDeleteBtn"){
+    let userLink = evt.target.parentElement
+    fetch(favoriteURL + `/` + id, {
+      method: 'DELETE'
+    })
+    const favID = evt.target.dataset.id
+    const favDiv = document.querySelector(`.div-${favID}`)
+    favDiv.remove()
+  }
+})
 
 ////////////////////////////////////// CLOCK //////////////////////////////////////
 
   function showClock(){
-    const secondHand = document.getElementById('second-hand')
-    const minsHand = document.getElementById('min-hand')
+    const secHand = document.getElementById('second-hand')
+    const minHand = document.getElementById('min-hand')
     const hourHand = document.getElementById('hour-hand')
     const clockDiv = document.querySelector('.clock')
+
     function setDate(){
       const now = new Date()
-      const seconds = now.getSeconds()
-      const secondsDegrees = ((seconds/60) * 360) + 90
-      secondHand.style.transform = `rotate(${secondsDegrees}deg)`
+      const secs = now.getSeconds()
+      const secsDegrees = ((secs/60) * 360) + 90
+      secHand.style.transform = `rotate(${secsDegrees}deg)`
 
       const mins = now.getMinutes()
-      const minSDegrees = ((mins/60) * 360) + 90
-      minsHand.style.transform = `rotate(${minSDegrees}deg)`
+      const minsDegrees = ((mins/60) * 360) + 90
+      minHand.style.transform = `rotate(${minsDegrees}deg)`
 
-      const hour = now.getHours()
-      const hourDegrees = ((hour/12) * 360) + 90
-      hourHand.style.transform = `rotate(${hourDegrees}deg)`
+      const hours = now.getHours()
+      const hoursDegrees = ((hours/12) * 360) + 90
+      hourHand.style.transform = `rotate(${hoursDegrees}deg)`
     }
     setInterval(setDate, 1000)
   }
@@ -393,7 +427,7 @@ let cityInfo = document.querySelector('#city-info')
     };
 
     wikiURL = wikiURL + "?origin=*";
-    Object.keys(params).forEach(function(key){wikiURL += "&" + key + "=" + params[key];});
+    Object.keys(params).forEach(key => {wikiURL += "&" + key + "=" + params[key];});
 
     fetch(wikiURL)
     .then(res => res.json())
@@ -402,7 +436,7 @@ let cityInfo = document.querySelector('#city-info')
         cityHeader.innerText = ""
         searchUL.innerHTML = `<h2  style="text-decoration: underline;"> Snippets of information about your search </h2><br>`
         searchObj.query.search.forEach(element => {
-          console.log(element)
+          // console.log(element)
           cityIcons.innerText = ""
           allInfo.innerText = ""
           citiesTitle.innerText = ""
@@ -414,9 +448,9 @@ let cityInfo = document.querySelector('#city-info')
           `
         })
         searchUL.innerHTML += `<p>For more information: <a href="https://www.wikipedia.org/">Click Here!</a></p>`
-        console.log("Your search page 'Nelson Mandela' exists on English Wikipedia" );
+        console.log("Your search page 'Nelson Mandela' exists on English Wikipedia" )
       }
     })
-    .catch(function(error){console.log(error);});
+    .catch(error => {console.log(error)})
   })
 });

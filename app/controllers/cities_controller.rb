@@ -27,7 +27,9 @@ class CitiesController < ApplicationController
   # PATCH/PUT /cities/1
   def update
     # byebug
-    if @city.update(favorites_count: params[:favorite_count])
+    count = params[:favorite_count] || @city.favorites_count
+    name = params[:name] || @city.name
+    if @city.update(favorites_count: count, name: name)
       render json: @city
     else
       render json: @city.errors, status: :unprocessable_entity
